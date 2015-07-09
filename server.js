@@ -101,16 +101,16 @@ function makeRequest(url, real_name, color){
 							var parts = text.split("donated $");
 							current = parseInt(parts[1]);
 						}
-						else if (text.indexOf("June") > -1){
+						else if (text.indexOf("July") > -1){
 							var parts = text.split(" ");
 							var date = parts[2];
 							date = parseInt(date.substring(0, date.length - 1));
-							if (date >= 24){
+							if (date >= 4){
 								raised_amount += current;
 							}
 
 						}
-						else if (text.indexOf("July") > -1) {
+						else if (text.indexOf("August") > -1) {
 							raised_amount += current;
 						}
 					});
