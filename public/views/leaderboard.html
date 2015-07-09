@@ -93,7 +93,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | sameUnit:'Admin'">
+            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | filter:{unit:'Admin'}">
               <td>{{$index + 1}}</td>
               <td>{{leader.name}}</td>
               <td>{{leader.amount_raised}}</td>
@@ -114,7 +114,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | sameUnit:'Yellow'">
+            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | filter:{unit:'Yellow'}">
               <td>{{$index + 1}}</td>
               <td>{{leader.name}}</td>
               <td>{{leader.amount_raised}}</td>
@@ -138,7 +138,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | sameUnit:'Green'">
+            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | filter:{unit:'Green'}">
               <td>{{$index + 1}}</td>
               <td>{{leader.name}}</td>
               <td>{{leader.amount_raised}}</td>
@@ -159,7 +159,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | sameUnit:'Blue'">
+            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | filter:{unit:'Blue'}">
               <td>{{$index + 1}}</td>
               <td>{{leader.name}}</td>
               <td>{{leader.amount_raised}}</td>
@@ -183,7 +183,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | sameUnit:'Red'">
+            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | filter:{unit:'Red'}">
               <td>{{$index + 1}}</td>
               <td>{{leader.name}}</td>
               <td>{{leader.amount_raised}}</td>
@@ -204,7 +204,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | sameUnit:'Orange'">
+            <tr ng-repeat="leader in leaders | orderBy:'amount_raised':true | filter:{unit:'Orange'}">
               <td>{{$index + 1}}</td>
               <td>{{leader.name}}</td>
               <td>{{leader.amount_raised}}</td>
