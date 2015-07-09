@@ -24,49 +24,7 @@ app.get('/api/populate', function(req, res){
 			var request_url = split_url[0];
 			var real_name = split_url[1];
 			var color = split_url[2];
-			request(request_url, function (error, response, html){
-				if (!error && response.statusCode == 200) {
-					var $ = cheerio.load(html);
-					var fundraiser_name = $('div.profile_wrapper strong').text();
-					var fundraiser_url = response.request.uri.href;
-					var raised_amount = 0;
-					var current = 0;
-					$('table.recent_donations_table td').each(function(i, elem) {
-						var text = $(this).text();
-						if (text.indexOf("donated") > -1){
-							var parts = text.split("donated $");
-							current = parseInt(parts[1]);
-						}
-						else if (text.indexOf("June") > -1){
-							var parts = text.split(" ");
-							var date = parts[2];
-							date = parseInt(date.substring(0, date.length - 1));
-							if (date >= 24){
-								raised_amount += current;
-							}
-
-						}
-						else if (text.indexOf("July") > -1) {
-							raised_amount += current;
-						}
-					});
-
-					var fundraiser = new Counselor({
-						name: fundraiser_name,
-						camp_name: real_name,
-						url: fundraiser_url,
-						amount_raised: raised_amount,
-						unit: color
-					});
-					
-					fundraiser.save(function(err) {
-						if (err) throw err;
-
-						console.log('Counselor created!');
-					});
-
-				}
-			});
+			makeRequest(request_url, real_name, color);
 		}
 	});
 });
@@ -128,6 +86,53 @@ app.get('/api/scrape', function(req, res){
 		}
 	});
 });
+
+function makeRequest(url, real_name, color){
+	request(url, function (error, response, html){
+				if (!error && response.statusCode == 200) {
+					var $ = cheerio.load(html);
+					var fundraiser_name = $('div.profile_wrapper strong').text();
+					var fundraiser_url = url;
+					var raised_amount = 0;
+					var current = 0;
+					$('table.recent_donations_table td').each(function(i, elem) {
+						var text = $(this).text();
+						if (text.indexOf("donated") > -1){
+							var parts = text.split("donated $");
+							current = parseInt(parts[1]);
+						}
+						else if (text.indexOf("June") > -1){
+							var parts = text.split(" ");
+							var date = parts[2];
+							date = parseInt(date.substring(0, date.length - 1));
+							if (date >= 24){
+								raised_amount += current;
+							}
+
+						}
+						else if (text.indexOf("July") > -1) {
+							raised_amount += current;
+						}
+					});
+
+					var fundraiser = new Counselor({
+						name: fundraiser_name,
+						camp_name: real_name,
+						url: fundraiser_url,
+						amount_raised: raised_amount,
+						unit: color
+					});
+					
+					fundraiser.save(function(err) {
+						if (err) throw err;
+
+						console.log('Counselor created!');
+					});
+
+				}
+			});
+
+}
 
 app.listen(port, function(){
 	console.log('Our app is running on http://localhost:' + port);
