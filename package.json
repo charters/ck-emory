@@ -1,0 +1,16 @@
+{
+	"name"			: "node-fundraise-scrape",
+	"version"		: "0.0.1",
+	"description"	: "Scrape individual donation pages from a text file.",
+	"main"			: "server.js",
+	"author"		: "Pono",
+	"dependencies"	: {
+		"express"	: "latest",
+		"request"	: "latest",
+		"fs"		: "latest",
+		"ejs"		: "latest",
+		"cheerio"	: "latest",
+		"mongoose"	: "latest",
+		"mongodb-uri" : "latest"
+	}
+}
