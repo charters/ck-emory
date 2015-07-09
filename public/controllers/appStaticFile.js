@@ -13,22 +13,22 @@ leaderboardApp.controller('leaderboardCtrl', function($scope, $http){
 			var red_total = 0;
 			var orange_total = 0;
 			for (var i = 0; i < $scope.leaders.length; i++){
-				if ($scope.leaders[i].color == 'Admin'){
+				if ($scope.leaders[i].unit == 'Admin'){
 					admin_total += $scope.leaders[i].amount_raised;
 				}
-				else if ($scope.leaders[i].color == 'Yellow'){
+				else if ($scope.leaders[i].unit == 'Yellow'){
 					yellow_total += $scope.leaders[i].amount_raised;
 				}
-				else if ($scope.leaders[i].color == 'Green'){
+				else if ($scope.leaders[i].unit == 'Green'){
 					green_total += $scope.leaders[i].amount_raised;
 				}
-				else if ($scope.leaders[i].color == 'Blue'){
+				else if ($scope.leaders[i].unit == 'Blue'){
 					blue_total += $scope.leaders[i].amount_raised;
 				}
-				else if ($scope.leaders[i].color == 'Red'){
+				else if ($scope.leaders[i].unit == 'Red'){
 					red_total += $scope.leaders[i].amount_raised;
 				}
-				else if ($scope.leaders[i].color == 'Orange'){
+				else if ($scope.leaders[i].unit == 'Orange'){
 					orange_total += $scope.leaders[i].amount_raised;
 				}
 			}
