@@ -55,87 +55,143 @@ app.get('/api/scrape', function(req, res){
 
 function makeRequest(url, real_name, color){
 	request(url, function (error, response, html){
-				if (!error && response.statusCode == 200) {
-					var $ = cheerio.load(html);
-					var fundraiser_name = $('div.profile_wrapper strong').text();
-					var fundraiser_url = url;
-					var raised_amount = 0;
-					var current = 0;
-					$('table.recent_donations_table td').each(function(i, elem) {
-						var text = $(this).text();
-						if (text.indexOf("donated") > -1){
-							var parts = text.split("donated $");
-							current = parseInt(parts[1]);
-						}
-						else if (text.indexOf("July") > -1){
-							var parts = text.split(" ");
-							var date = parts[2];
-							date = parseInt(date.substring(0, date.length - 1));
-							if (date >= 4){
-								raised_amount += current;
-							}
-
-						}
-						else if (text.indexOf("August") > -1) {
-							raised_amount += current;
-						}
-					});
-
-					var fundraiser = new Counselor({
-						name: fundraiser_name,
-						camp_name: real_name,
-						url: fundraiser_url,
-						amount_raised: raised_amount,
-						unit: color
-					});
-					
-					fundraiser.save(function(err) {
-						if (err) throw err;
-
-						console.log('Counselor created!');
-					});
+		if (!error && response.statusCode == 200) {
+			var $ = cheerio.load(html);
+			var fundraiser_name = $('div.profile_wrapper strong').text();
+			var fundraiser_url = url;
+			var raised_amount = 0;
+			var current = 0;
+			$('table.recent_donations_table td').each(function(i, elem) {
+				var text = $(this).text();
+				if (text.indexOf("donated") > -1){
+					var parts = text.split("donated $");
+					current = parseInt(parts[1]);
+				}
+				else if (text.indexOf("July") > -1){
+					var parts = text.split(" ");
+					var date = parts[2];
+					date = parseInt(date.substring(0, date.length - 1));
+					if (date >= 4){
+						raised_amount += current;
+					}
 
 				}
+				else if (text.indexOf("August") > -1) {
+					raised_amount += current;
+				}
 			});
+
+			var fundraiser = new Counselor({
+				name: fundraiser_name,
+				camp_name: real_name,
+				url: fundraiser_url,
+				amount_raised: raised_amount,
+				unit: color
+			});
+
+			fundraiser.save(function(err) {
+				if (err) throw err;
+
+				console.log('Counselor created!');
+			});
+
+		}
+	});
 
 }
 
 function updateRequest(url){
 	request(url, function (error, response, html){
-				if (!error && response.statusCode == 200) {
-					var $ = cheerio.load(html);
-					var fundraiser_name = $('div.profile_wrapper strong').text();
-					var fundraiser_url = response.request.uri.href;
-					var raised_amount = 0;
-					var current = 0;
-					$('table.recent_donations_table td').each(function(i, elem) {
-						var text = $(this).text();
-						if (text.indexOf("donated") > -1){
-							var parts = text.split("donated $");
-							current = parseInt(parts[1]);
-						}
-						else if (text.indexOf("July") > -1){
-							var parts = text.split(" ");
-							var date = parts[2];
-							date = parseInt(date.substring(0, date.length - 1));
-							if (date >= 4){
-								raised_amount += current;
-							}
-
-						}
-						else if (text.indexOf("August") > -1) {
-							raised_amount += current;
-						}
-					});
-
-					
-					Counselor.findOneAndUpdate({ url: fundraiser_url }, {amount_raised: raised_amount}, function(err, counselor) {
-						if (err) throw err;
-
-						console.log('Updated counselor with name: ' + fundraiser_name);
-					});
+		if (!error && response.statusCode == 200) {
+			var $ = cheerio.load(html);
+			var fundraiser_name = $('div.profile_wrapper strong').text();
+			var fundraiser_url = response.request.uri.href;
+			var raised_amount = 0;
+			var current = 0;
+			$('table.recent_donations_table td').each(function(i, elem) {
+				var text = $(this).text();
+				if (text.indexOf("donated") > -1){
+					var parts = text.split("donated $");
+					if (parts[1].indexOf(",") > - 1){
+						var thousands = parts[1].split(",");
+						var big = parseInt(thousands[0]) * 1000;
+						var little = parseInt(thousands[1]);
+						var thousands_total = big + little;
+						current = thousands_total;
+					}
+					else{
+						current = parseInt(parts[1]);
+					}
+				}
+				else if (text.indexOf("May") > -1){
+					raised_amount += current;
+				}
+				else if (text.indexOf("June") > -1) {
+					raised_amount += current;
+				}
+				else if (text.indexOf("July") > -1) {
+					raised_amount += current;
+				}
+				else if (text.indexOf("August") > -1) {
+					raised_amount += current;
 				}
 			});
+
+			if ($('div.comments_navigation').length > 0){
+				twoPages(url, raised_amount);
+			}
+			else {
+				Counselor.findOneAndUpdate({ url: fundraiser_url }, {amount_raised: raised_amount}, function(err, counselor) {
+					if (err) throw err;
+
+					console.log('Updated counselor with name: ' + fundraiser_name);
+				});
+			}
+		}
+	});
+}
+
+function twoPages(url, raised_sofar){
+	var extended = url + '?tp=2';
+	request(extended, function (error, response, html){
+		if (!error && response.statusCode == 200) {
+			var $ = cheerio.load(html);
+			var current = 0;
+			$('table.recent_donations_table td').each(function(i, elem) {
+				var text = $(this).text();
+				if (text.indexOf("donated") > -1){
+					var parts = text.split("donated $");
+					if (parts[1].indexOf(",") > - 1){
+						var thousands = parts[1].split(",");
+						var big = parseInt(thousands[0]) * 1000;
+						var little = parseInt(thousands[1]);
+						var thousands_total = big + little;
+						current = thousands_total;
+					}
+					else{
+						current = parseInt(parts[1]);
+					}
+				}
+				else if (text.indexOf("May") > -1){
+					raised_sofar += current;
+				}
+				else if (text.indexOf("June") > -1) {
+					raised_sofar += current;
+				}
+				else if (text.indexOf("July") > -1) {
+					raised_sofar += current;
+				}
+				else if (text.indexOf("August") > -1) {
+					raised_sofar += current;
+				}
+			});	
+		}
+		Counselor.findOneAndUpdate({ url: fundraiser_url }, {amount_raised: raised_sofar}, function(err, counselor) {
+			if (err) throw err;
+
+			console.log('Updated counselor with name: ' + fundraiser_name);
+		});
+	});
 }
 
 app.listen(port, function(){
