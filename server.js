@@ -4,7 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var ejs = require('ejs');
 var app = express();
-//var Counselor = require('./public/models/counselor')
+var Counselor = require('./public/models/counselor')
 
 var port = process.env.PORT || 8080;
 
