@@ -4,7 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var ejs = require('ejs');
 var app = express();
-var Counselor = require('./public/models/counselor')
+//var Counselor = require('./public/models/counselor')
 
 var port = process.env.PORT || 8080;
 
@@ -151,8 +151,8 @@ function updateRequest(url){
 	});
 }
 
-function twoPages(url, raised_sofar){
-	var extended = url + '?tp=2';
+function twoPages(funds_url, raised_sofar){
+	var extended = funds_url + '?tp=2';
 	request(extended, function (error, response, html){
 		if (!error && response.statusCode == 200) {
 			var $ = cheerio.load(html);
@@ -186,7 +186,7 @@ function twoPages(url, raised_sofar){
 				}
 			});	
 		}
-		Counselor.findOneAndUpdate({ url: fundraiser_url }, {amount_raised: raised_sofar}, function(err, counselor) {
+		Counselor.findOneAndUpdate({ url: funds_url }, {amount_raised: raised_sofar}, function(err, counselor) {
 			if (err) throw err;
 
 			console.log('Updated counselor with name: ' + fundraiser_name);
