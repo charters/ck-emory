@@ -33,11 +33,11 @@ leaderboardApp.controller('leaderboardCtrl', function($scope, $http){
 				}
 			}
 			$scope.admin_progress = (admin_total/5000 * 100) + '%';
-			$scope.yellow_progress = ((yellow_total/5000 * 100) + 20) + '%';
-			$scope.green_progress = (green_total/5000 * 100 + 20) + '%';
+			$scope.yellow_progress = (yellow_total/5000 * 100) + '%';
+			$scope.green_progress = (green_total/5000 * 100) + '%';
 			$scope.blue_progress = (blue_total/5000 * 100) + '%';
-			$scope.red_progress = (red_total/5000 * 100 + 10) + '%';
-			$scope.orange_progress = (orange_total/5000 * 100 + 10) + '%';
+			$scope.red_progress = (red_total/5000 * 100) + '%';
+			$scope.orange_progress = (orange_total/5000 * 100) + '%';
 
 		})
 	}
