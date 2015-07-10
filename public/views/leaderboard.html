@@ -23,17 +23,17 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Camp Kesem Emory Post-Camp Color Wars</a>
+            <a class="navbar-brand" href="#">Camp Kesem Emory Fundraising Wars</a>
           </div>
 
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#leaders"><span class="label label-default">Admin</span></a></li>
-              <li><a href="#leaders"><span class="label progress-bar-yellow">Yellow</span></a></li>
-              <li><a href="#leaders"><span class="label label-success">Green</span></a></li>
-              <li><a href="#leaders"><span class="label label-info">Blue</span></a></li>
-              <li><a href="#leaders"><span class="label label-danger">Red</span></a></li>
-              <li><a href="#leaders"><span class="label label-warning">Orange</span></a></li>
+              <li><a href="#admin"><span class="label label-default">Admin</span></a></li>
+              <li><a href="#yellow"><span class="label progress-bar-yellow">Yellow</span></a></li>
+              <li><a href="#green"><span class="label label-success">Green</span></a></li>
+              <li><a href="#blue"><span class="label label-info">Blue</span></a></li>
+              <li><a href="#red"><span class="label label-danger">Red</span></a></li>
+              <li><a href="#orange"><span class="label label-warning">Orange</span></a></li>
             </ul>
           </div>
         </div>
@@ -42,9 +42,9 @@
     
     <div class = "row">
       <div class = "container img-container">
-        <img src="./img/dance.jpg" class ="img-responsive img-thumbnail" style = "width: 30%">
-        <img src="./img/red.jpg" class ="img-responsive img-thumbnail" style = "width: 30%">
-        <img src="./img/fire.jpg" class ="img-responsive img-thumbnail" style = "width: 30%">
+        <img src="./img/blob.jpg" class ="img-responsive img-thumbnail" style = "width: 32%">
+        <img src="./img/group.jpg" class ="img-responsive img-thumbnail" style = "width: 32%">
+        <img src="./img/mud.jpg" class ="img-responsive img-thumbnail" style = "width: 32%">
       </div>
     </div>
 
@@ -84,7 +84,7 @@
                 <td>{{$index + 1}}</td>
                 <td>{{leader.camp_name}}</td>
                 <td>${{leader.amount_raised}}</td>
-                <td><a ng-href="{{leader.url}}" class="label label-info">Donate to {{leader.name}}</a></td>
+                <td><a ng-href="{{leader.url}}" class="label label-default">Donate to {{leader.name}}</a></td>
               </tr>
             </tbody>
           </table>
@@ -105,7 +105,7 @@
                 <td>{{$index + 1}}</td>
                 <td>{{leader.camp_name}}</td>
                 <td>${{leader.amount_raised}}</td>
-                <td><a ng-href="{{leader.url}}" class="label label-info">Donate to {{leader.name}}</a></td>
+                <td><a ng-href="{{leader.url}}" class="label progress-bar-yellow">Donate to {{leader.name}}</a></td>
               </tr>
             </tbody>
           </table>
@@ -129,7 +129,7 @@
                 <td>{{$index + 1}}</td>
                 <td>{{leader.camp_name}}</td>
                 <td>${{leader.amount_raised}}</td>
-                <td><a ng-href="{{leader.url}}" class="label label-info">Donate to {{leader.name}}</a></td>
+                <td><a ng-href="{{leader.url}}" class="label label-success">Donate to {{leader.name}}</a></td>
               </tr>
             </tbody>
           </table>
@@ -174,7 +174,7 @@
                 <td>{{$index + 1}}</td>
                 <td>{{leader.camp_name}}</td>
                 <td>${{leader.amount_raised}}</td>
-                <td><a ng-href="{{leader.url}}" class="label label-info">Donate to {{leader.name}}</a></td>
+                <td><a ng-href="{{leader.url}}" class="label label-danger">Donate to {{leader.name}}</a></td>
               </tr>
             </tbody>
           </table>
@@ -195,7 +195,7 @@
                 <td>{{$index + 1}}</td>
                 <td>{{leader.camp_name}}</td>
                 <td>${{leader.amount_raised}}</td>
-                <td><a ng-href="{{leader.url}}" class="label label-info">Donate to {{leader.name}}</a></td>
+                <td><a ng-href="{{leader.url}}" class="label label-warning">Donate to {{leader.name}}</a></td>
               </tr>
             </tbody>
           </table>
