@@ -189,7 +189,7 @@ function twoPages(funds_url, raised_sofar){
 		Counselor.findOneAndUpdate({ url: funds_url }, {amount_raised: raised_sofar}, function(err, counselor) {
 			if (err) throw err;
 
-			console.log('Updated counselor with name: ' + fundraiser_name);
+			console.log('Updated counselor with url:' + funds_url);
 		});
 	});
 }
